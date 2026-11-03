@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 # 🎓 LPU Placement Intelligence
 ### Student Readiness Prediction & Skill Gap Analysis Platform
