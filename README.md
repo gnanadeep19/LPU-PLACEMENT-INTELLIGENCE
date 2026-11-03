@@ -398,13 +398,13 @@ This project is licensed under the **MIT License**.
 
 > ⚠️ **Important:** Any use, fork, or distribution of this project **must retain the original author credit**:
 >
-> **Created by [PRAVEEN](https://github.com/PRAVEEN-LPU)**
+> 
 
 ---
 
 <div align="center">
 
-### Made with 🔥 by [PRAVEEN](https://github.com/PRAVEEN-LPU)
+
 
 [![GitHub](https://img.shields.io/badge/GitHub-PRAVEEN--LPU-181717?style=for-the-badge&logo=github)](https://github.com/PRAVEEN-LPU)
 
