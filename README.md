@@ -11,7 +11,7 @@
 
 <br/>
 
-> **Built with ❤️ by [PRAVEEN](https://github.com/PRAVEEN-LPU)**
+
 
 <br/>
 
