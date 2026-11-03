@@ -1,0 +1,161 @@
+{
+  "dataset": "dataset/college_placement_engineering.csv",
+  "dataset_sha256": "5b0b9c0236bd616ecd4ce7c78e62470abc92a4ace68345d50f7129d086abe8b3",
+  "provenance": "Dataset origin, license, label construction and real versus synthetic status are not independently verified.",
+  "target": "PlacedOrNot (definition and observation horizon unverified)",
+  "original_rows": 2966,
+  "exact_duplicate_rows_removed": 1829,
+  "distinct_full_rows": 1137,
+  "sample_rows": 1000,
+  "training_rows_after_refit": 792,
+  "test_rows": 208,
+  "selection_fit_rows": 631,
+  "selection_validation_rows": 161,
+  "features": [
+    "Age",
+    "Stream",
+    "Internships",
+    "CGPA",
+    "Hostel",
+    "HistoryOfBacklogs"
+  ],
+  "excluded": [
+    "Gender"
+  ],
+  "split": "Stratified sample, then grouped holdout by identical input values; validation grouped in the same way.",
+  "group_overlap_train_test": 0,
+  "sample_class_counts": {
+    "1": 580,
+    "0": 420
+  },
+  "test_class_counts": {
+    "1": 121,
+    "0": 87
+  },
+  "seed": 42,
+  "model_selection": "Highest validation balanced accuracy; final model refitted on training split.",
+  "validation_metrics": {
+    "majority_baseline": {
+      "accuracy": 0.6211180124223602,
+      "accuracy_wilson_95_interval": [
+        0.5441867952191887,
+        0.6924041709067671
+      ],
+      "balanced_accuracy": 0.5,
+      "precision": 0.6211180124223602,
+      "recall": 1.0,
+      "f1": 0.7662835249042146,
+      "roc_auc": 0.5,
+      "confusion_matrix_rows_actual_0_1_columns_predicted_0_1": [
+        [
+          0,
+          61
+        ],
+        [
+          0,
+          100
+        ]
+      ]
+    },
+    "logistic_regression": {
+      "accuracy": 0.7577639751552795,
+      "accuracy_wilson_95_interval": [
+        0.6860782501150254,
+        0.8174358572812396
+      ],
+      "balanced_accuracy": 0.7570491803278688,
+      "precision": 0.8351648351648352,
+      "recall": 0.76,
+      "f1": 0.7958115183246073,
+      "roc_auc": 0.879344262295082,
+      "confusion_matrix_rows_actual_0_1_columns_predicted_0_1": [
+        [
+          46,
+          15
+        ],
+        [
+          24,
+          76
+        ]
+      ]
+    },
+    "random_forest": {
+      "accuracy": 0.84472049689441,
+      "accuracy_wilson_95_interval": [
+        0.7808188751223256,
+        0.8925554130823182
+      ],
+      "balanced_accuracy": 0.8686065573770492,
+      "precision": 0.9746835443037974,
+      "recall": 0.77,
+      "f1": 0.8603351955307262,
+      "roc_auc": 0.9114754098360656,
+      "confusion_matrix_rows_actual_0_1_columns_predicted_0_1": [
+        [
+          59,
+          2
+        ],
+        [
+          23,
+          77
+        ]
+      ]
+    }
+  },
+  "selected_model": "random_forest",
+  "test_metrics": {
+    "random_forest": {
+      "accuracy": 0.8076923076923077,
+      "accuracy_wilson_95_interval": [
+        0.7487484189603574,
+        0.855477027335975
+      ],
+      "balanced_accuracy": 0.808872423292486,
+      "precision": 0.8584070796460177,
+      "recall": 0.8016528925619835,
+      "f1": 0.8290598290598291,
+      "roc_auc": 0.9046736962097464,
+      "confusion_matrix_rows_actual_0_1_columns_predicted_0_1": [
+        [
+          71,
+          16
+        ],
+        [
+          24,
+          97
+        ]
+      ]
+    },
+    "majority_baseline": {
+      "accuracy": 0.5817307692307693,
+      "accuracy_wilson_95_interval": [
+        0.5138071562092293,
+        0.6466902279632339
+      ],
+      "balanced_accuracy": 0.5,
+      "precision": 0.5817307692307693,
+      "recall": 1.0,
+      "f1": 0.7355623100303952,
+      "roc_auc": 0.5,
+      "confusion_matrix_rows_actual_0_1_columns_predicted_0_1": [
+        [
+          0,
+          87
+        ],
+        [
+          0,
+          121
+        ]
+      ]
+    }
+  },
+  "limitations": [
+    "The website readiness model uses a different outcome and nine features; this model is incompatible.",
+    "The data may be synthetic; provenance and label definition require verification.",
+    "Exact distinct rows are not verified unique individuals.",
+    "Test records are from the same dataset, not a verified independent LPU cohort.",
+    "Age and hostel status may introduce bias; performance and fairness were not validated for individual use."
+  ],
+  "python_version": "3.13.15",
+  "scikit_learn_version": "1.9.0"
+}

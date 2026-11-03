@@ -1,0 +1,133 @@
+{
+  "dataset": {
+    "path": "dataset\\students.csv",
+    "sha256": "e9fe3511c1ef3777e871e0bd97bd2b93efb002998ae3f29d4be152f6e4dc5e8f",
+    "original_rows": 253,
+    "rows": 251,
+    "duplicate_rows_removed": 2,
+    "features": [
+      "cgpa",
+      "technical_score",
+      "aptitude_score",
+      "communication_score",
+      "coding_score",
+      "projects",
+      "internships",
+      "certifications",
+      "backlogs"
+    ],
+    "target": "placement_ready",
+    "class_distribution": {
+      "0": 129,
+      "1": 122
+    },
+    "data_status": "prototype_unverified_label_and_provenance"
+  },
+  "evaluation": {
+    "seed": 42,
+    "folds": 5,
+    "repeats": 3,
+    "method": "sigmoid",
+    "calibration_cv_folds": 3
+  },
+  "raw": {
+    "accuracy": 0.9468791500664011,
+    "f1_score": 0.9453551912568307,
+    "brier_score": 0.053088788826945676,
+    "log_loss": 0.8161035597114334,
+    "roc_auc": 0.9852797898928284
+  },
+  "calibrated": {
+    "accuracy": 0.949535192563081,
+    "f1_score": 0.947945205479452,
+    "brier_score": 0.04596447585019163,
+    "log_loss": 0.1999036629440789,
+    "roc_auc": 0.9828264215416331
+  },
+  "calibration_curve": {
+    "raw": [
+      {
+        "mean_predicted_probability": 6.705693064423129e-09,
+        "fraction_positive": 0.0
+      },
+      {
+        "mean_predicted_probability": 9.08103783483851e-09,
+        "fraction_positive": 0.0
+      },
+      {
+        "mean_predicted_probability": 9.697307162973182e-09,
+        "fraction_positive": 0.013888888888888888
+      },
+      {
+        "mean_predicted_probability": 1.0413192616847906e-08,
+        "fraction_positive": 0.04
+      },
+      {
+        "mean_predicted_probability": 6.475537020935504e-08,
+        "fraction_positive": 0.17105263157894737
+      },
+      {
+        "mean_predicted_probability": 0.8674232261063477,
+        "fraction_positive": 0.6710526315789473
+      },
+      {
+        "mean_predicted_probability": 0.9999999884701994,
+        "fraction_positive": 1.0
+      },
+      {
+        "mean_predicted_probability": 0.9999999893428426,
+        "fraction_positive": 1.0
+      },
+      {
+        "mean_predicted_probability": 0.9999999899403887,
+        "fraction_positive": 1.0
+      },
+      {
+        "mean_predicted_probability": 0.999999991646245,
+        "fraction_positive": 0.9733333333333334
+      }
+    ],
+    "calibrated": [
+      {
+        "mean_predicted_probability": 0.06747414155579548,
+        "fraction_positive": 0.03488372093023256
+      },
+      {
+        "mean_predicted_probability": 0.07658724268543812,
+        "fraction_positive": 0.0
+      },
+      {
+        "mean_predicted_probability": 0.08519893693324948,
+        "fraction_positive": 0.043478260869565216
+      },
+      {
+        "mean_predicted_probability": 0.10134275744267215,
+        "fraction_positive": 0.0
+      },
+      {
+        "mean_predicted_probability": 0.24448016947797643,
+        "fraction_positive": 0.11842105263157894
+      },
+      {
+        "mean_predicted_probability": 0.6775396102490858,
+        "fraction_positive": 0.7209302325581395
+      },
+      {
+        "mean_predicted_probability": 0.8619983399835389,
+        "fraction_positive": 0.9850746268656716
+      },
+      {
+        "mean_predicted_probability": 0.8803888408939893,
+        "fraction_positive": 1.0
+      },
+      {
+        "mean_predicted_probability": 0.8915875481324359,
+        "fraction_positive": 1.0
+      },
+      {
+        "mean_predicted_probability": 0.9031919491411334,
+        "fraction_positive": 1.0
+      }
+    ]
+  }
+}

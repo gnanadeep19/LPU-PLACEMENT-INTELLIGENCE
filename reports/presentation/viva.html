@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Viva Question Bank</title>
+<style>
+@page { size: A4; margin: 14mm 15mm 13mm 15mm; }
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 10pt; line-height: 1.48; color: #1f2933; margin: 0;
+}
+.cover {
+  border-left: 6px solid #0f766e; padding: 4px 0 4px 16px; margin-bottom: 18px;
+}
+.cover .kicker {
+  font-size: 9pt; letter-spacing: 2.4px; text-transform: uppercase;
+  color: #0f766e; font-weight: 700; margin: 0 0 6px;
+}
+.cover h1 { font-size: 26pt; line-height: 1.1; margin: 0 0 6px; color: #0b1f2a; }
+.cover .platform { font-size: 13pt; font-weight: 600; color: #334e5c; margin: 0 0 10px; }
+.cover p { margin: 0; font-size: 9.2pt; color: #52616b; max-width: 165mm; }
+h2 {
+  font-size: 12.5pt; color: #0b1f2a; margin: 15px 0 7px;
+  padding-bottom: 4px; border-bottom: 1.6px solid #0f766e;
+  break-after: avoid; page-break-after: avoid;
+}
+.qa { break-inside: avoid; page-break-inside: avoid; margin: 0 0 7px; padding: 0 0 0 11px;
+      border-left: 2px solid #cfe3e0; }
+.qa h3 {
+  font-size: 10.4pt; margin: 0 0 2px; color: #0f4c5c; font-weight: 700; line-height: 1.35;
+}
+.qa h3 .num { color: #0f766e; }
+.qa p { margin: 0 0 2px; text-align: justify; }
+p { margin: 0 0 8px; }
+code {
+  font-family: "Cascadia Mono", Consolas, monospace; font-size: 8.8pt;
+  background: #eef4f3; color: #0b4f4a; padding: 0 3px; border-radius: 2px;
+}
+table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 9.4pt;
+        break-inside: avoid; page-break-inside: avoid; }
+th { background: #0f766e; color: #ffffff; text-align: left; padding: 6px 8px; font-weight: 600; }
+td { padding: 5px 8px; border-bottom: 1px solid #dbe6e5; }
+tr:nth-child(even) td { background: #f6faf9; }
+td:first-child { font-weight: 600; color: #0b1f2a; white-space: nowrap; }
+ul { margin: 4px 0 10px; padding-left: 18px; }
+li { margin-bottom: 3px; }
+.tip { background: #f2f8f6; border: 1px solid #cfe3e0; border-left: 4px solid #0f766e;
+       padding: 9px 12px; border-radius: 3px; break-inside: avoid; page-break-inside: avoid; }
+</style></head><body>
+<header class="cover">
+  <p class="kicker">Viva Question Bank</p>
+  <h1>Viva Preparation</h1>
+  <p class="platform">LPU Placement Intelligence Platform</p>
+  <p>Every figure below is taken from the project&#x27;s own artifacts: <code>reports/model-evaluation/</code>, <code>reports/teacher-brief-xgboost/</code>, <code>backend/placement_model.joblib</code>, <code>reports/data-audit/</code> and <code>docs/TEACHER_REQUIREMENTS_AUDIT.md</code>. Nothing here is estimated.</p>
+</header>
+<h2>Six numbers to memorise cold</h2>
+<table><thead><tr><th>Number</th><th>Meaning</th></tr></thead><tbody><tr><td>96.08% (49/51)</td><td>Deployed Gradient Boosting, single stratified hold-out</td></tr><tr><td>95.9% ± 2.2</td><td>AdaBoost, best in repeated 3x5 cross-validation</td></tr><tr><td>76.9% / 51.4%</td><td>Rule-based baseline / majority-class baseline</td></tr><tr><td>0.995</td><td>Best ROC-AUC (AdaBoost, cross-validation)</td></tr><tr><td>77.9%</td><td>CGPA share of Gini importance</td></tr><tr><td>251</td><td>Rows after removing 2 duplicates (from 253)</td></tr></tbody></table>
+<h2>A. The accuracy question (they will start here)</h2>
+<section class="qa"><h3><span class="num">1.</span> Your model shows 96% accuracy. Explain exactly what that number is.</h3>
+<p>It is the accuracy of the deployed Gradient Boosting classifier on a stratified 20% hold-out of 51 students it never saw during training — 49 correct, 2 errors (1 false positive, 1 false negative). It means: given nine self-reported competency inputs, the model reproduces the <code>placement_ready</code> label 96 times out of 100.</p>
+</section>
+<section class="qa"><h3><span class="num">2.</span> Is 96% your cross-validation result or one lucky split?</h3>
+<p>Both are reported, because one split hides variance. Repeated stratified 3x5 cross-validation over all 251 rows gives AdaBoost 95.9% ± 2.2, Gradient Boosting 94.7% ± 3.0, Random Forest 93.9%, Logistic Regression 94.0%. So the honest statement is &quot;94-96%, with roughly ±3 points of split variability&quot; — not &quot;exactly 96%&quot;.</p>
+</section>
+<section class="qa"><h3><span class="num">3.</span> Why is accuracy this high? Isn&#x27;t the problem too easy?</h3>
+<p>Partly, yes, and I will say so. The label is rule-consistent: CGPA alone carries 77.9% of the importance and active backlogs 7.3%, so the classes separate almost linearly. That is exactly why we added a 76.9% threshold baseline first — the model&#x27;s real contribution is the extra ~19 points over a hand-written rule, plus calibrated probabilities and per-student explanations.</p>
+</section>
+<section class="qa"><h3><span class="num">4.</span> If accuracy is high, why compare eight algorithms?</h3>
+<p>To prove the choice was not arbitrary. Same data, same split, same seed 42, five metrics each: Gradient Boosting 96.08%, Random Forest 94.12%, Decision Tree 94.12%, Naive Bayes 92.16%, AdaBoost 92.16%, Logistic Regression 92.16%, KNN 92.16%, SVM 90.20%. A single model would tell the examiner nothing about whether the approach was appropriate.</p>
+</section>
+<section class="qa"><h3><span class="num">5.</span> Accuracy alone is not sufficient — prove you know that.</h3>
+<p>Correct, and that is why we report balanced accuracy, precision, recall, F1, ROC-AUC, a confusion matrix, error analysis, and probability calibration. Calibration is the clearest evidence: raw Gradient Boosting had a log loss of 0.816; after sigmoid calibration on out-of-fold predictions it fell to 0.200, with Brier 0.053 to 0.046, at essentially unchanged AUC (0.985 to 0.983). Accuracy did not change; the probability quality did.</p>
+</section>
+<section class="qa"><h3><span class="num">6.</span> What is the model predicting — placement or readiness?</h3>
+<p>Readiness. The target is <code>placement_ready</code>, a prototype label whose construction is unverified. We deliberately do not claim &quot;this student will be placed&quot; and we do not call the output a placement probability in production copy. It is a readiness ranking signal plus a skill-gap report.</p>
+</section>
+<section class="qa"><h3><span class="num">7.</span> AdaBoost has the best CV score. Why is Gradient Boosting the deployed model?</h3>
+<p>Because the deployed artifact was selected on the frozen hold-out protocol used for the 8-model benchmark, where Gradient Boosting won at 96.08% with the fewest errors (2), and it was then integrated, versioned and calibrated. The cross-validation study came later and showed AdaBoost ahead by 1.2 points — within the ±2-3 point split noise, and AdaBoost&#x27;s higher variance on unseen data is a known weakness. We state both numbers rather than hiding the disagreement. If we retrain for production, AdaBoost is the candidate to re-test.</p>
+</section>
+<h2>B. Data</h2>
+<section class="qa"><h3><span class="num">8.</span> Where did the data come from?</h3>
+<p>Seven CSVs, 4,048 rows total, documented in <code>dataset/README.md</code> with source attribution. The live nine-feature model trains on <code>students.csv</code>: 253 rows, nine competency columns, target <code>placement_ready</code>. The other six are external benchmark and secondary-analysis files, some Kaggle-derived.</p>
+</section>
+<section class="qa"><h3><span class="num">9.</span> 253 rows is tiny. Can you defend that?</h3>
+<p>For nine numeric features it is workable — roughly 28 rows per feature, and repeated 3x5 cross-validation gives 15 estimates per model so we are not reading a single number. But it is not enough to claim generalization, and the CV spread of ±3 points reflects split variability only, not real-world performance. We list this as a limitation instead of overselling it.</p>
+</section>
+<section class="qa"><h3><span class="num">10.</span> You have seven datasets but train on one. Isn&#x27;t that wasteful?</h3>
+<p>No — they have different populations and different target definitions, so merging them would be invalid without a documented schema mapping, as recorded in the dataset audit and requirements audit. We used them for external benchmarking instead: on <code>college_placement_engineering.csv</code> (2,966 rows, reduced to 1,137 after removing 1,829 exact duplicates), Random Forest reached 79.2% accuracy and 0.852 ROC-AUC versus Logistic Regression 72.8% and 0.832. That is our evidence that the pipeline generalizes to a different, harder population — and that the 96% figure is dataset-specific.</p>
+</section>
+<section class="qa"><h3><span class="num">11.</span> What did EDA show?</h3>
+<p>Near-balanced classes (129 vs 122 after dedupe, so a 51.4% majority), no missing values in the primary set, a strong monotone CGPA-readiness relationship, hard threshold effects around 7.0-7.5 CGPA, and backlogs acting as a binary disqualifier. The class balance is why F1 and balanced accuracy are meaningful here, and why we did not need SMOTE.</p>
+</section>
+<section class="qa"><h3><span class="num">12.</span> Missing values and outliers — how were they handled?</h3>
+<p><code>data_pipeline.py</code> validates schema, label domain and missingness before training, and fails loudly rather than silently imputing. In the primary set there is nothing to impute. Outliers were inspected, not clipped: CGPA is bounded 0-10 and scores 0-100 by construction, and tree ensembles are insensitive to monotone outliers, so clipping would have destroyed real signal at the eligibility boundary.</p>
+</section>
+<section class="qa"><h3><span class="num">13.</span> Why exactly 2 rows removed?</h3>
+<p>They were exact duplicates. Duplicates inflate apparent accuracy because the same row can land in both train and test, so removal is explicit and logged (253 to 251) rather than done quietly inside a split call. The audit report flags 1,829 duplicates in the engineering dataset as a blocking finding — the same principle applied consistently.</p>
+</section>
+<section class="qa"><h3><span class="num">14.</span> Is there label leakage?</h3>
+<p>We checked for it explicitly. The label is not a column-derived formula we feed back in, but it is rule-consistent with CGPA and backlogs, which is a circularity risk rather than classic leakage: a model can score highly by re-learning the rule that generated the label. We disclose that, keep the threshold baseline visible as the reference point, and flag the label as unverified pending owner confirmation.</p>
+</section>
+<h2>C. Preprocessing and features</h2>
+<section class="qa"><h3><span class="num">15.</span> Did you scale the features?</h3>
+<p>For the canonical comparison, no scaler was applied, because seven of the eight candidates are tree-based and invariant to monotone feature scaling. Where it matters: SVM and KNN are scale-sensitive, and mixing CGPA (0-10) with scores (0-100) lets the score columns dominate distance and kernel computations — a plausible reason they scored lowest at 88.0% and 90.0%. That is a stated limitation, and the fix is a <code>StandardScaler</code> inside a pipeline for those two models. The external benchmark trainer already uses <code>Pipeline</code> with <code>ColumnTransformer</code> and <code>StandardScaler</code> for exactly this reason.</p>
+</section>
+<section class="qa"><h3><span class="num">16.</span> What feature engineering did you do, and why isn&#x27;t it in the live model?</h3>
+<p>In the XGBoost research workflow we created <code>coding_technical_mean</code> (mean of coding and technical scores) and <code>experience_count</code> (projects plus internships). They are not in the active model, deliberately: the deployed artifact stays on the original nine inputs so the API contract and the existing model file remain valid. Promoting engineered features would require a retrain, re-validation and an API version bump — we did not want an unevaluated model silently going live.</p>
+</section>
+<section class="qa"><h3><span class="num">17.</span> Feature selection or dimensionality reduction?</h3>
+<p>Not needed with nine low-collinearity inputs, and PCA would have destroyed the interpretability we rely on for the skill-gap panel. We did the diagnostic instead: Gini importance across the ensemble ranks CGPA 77.91%, backlogs 7.26%, certifications 4.45%, communication 2.87%, aptitude 2.84%, coding 2.44%, technical 1.18%, projects 1.06%, internships 0.00%. Internships at 0% reflects a near-constant distribution in the training cohort, not irrelevance in reality — we say that explicitly rather than dropping the feature.</p>
+</section>
+<section class="qa"><h3><span class="num">18.</span> Class imbalance handling?</h3>
+<p>Balanced enough (51.4 / 48.6) that resampling would add noise, not information. We handled it in evaluation instead — balanced accuracy and F1 alongside accuracy, <code>class_weight=&quot;balanced&quot;</code> on Random Forest, and stratified splits everywhere so every fold keeps the class ratio.</p>
+</section>
+<h2>D. Models, ensembles and tuning</h2>
+<section class="qa"><h3><span class="num">19.</span> Why tree ensembles? Why not deep learning?</h3>
+<p>Nine tabular features, 251 rows, monotone thresholds. A neural network would have far more parameters than data points, would overfit, and would cost us the per-feature attribution the product is built on. We justify the family, not just the winner: linear, instance-based, margin, probabilistic and ensemble models were all tested, and the boosted ensembles won because placement eligibility behaves like a set of interaction thresholds.</p>
+</section>
+<section class="qa"><h3><span class="num">20.</span> Bagging versus boosting — which won and why?</h3>
+<p>Boosting, narrowly. Bagging (Random Forest, 250 trees) reduces variance by averaging independent trees; boosting fits trees sequentially to the residual errors, reducing bias. With hard cutoffs where a handful of students sit right at the boundary, bias reduction was worth more than variance reduction. Concretely: Gradient Boosting 96.08% with 2 errors, Random Forest 94.12% with 3.</p>
+</section>
+<section class="qa"><h3><span class="num">21.</span> How did you tune hyperparameters?</h3>
+<p>Grid search with cross-validation on the training split only: <code>n_estimators</code> in {80, 160}, <code>max_depth</code> in {2, 3}, <code>learning_rate</code> in {0.05, 0.1}, 3-fold stratified, selected on balanced accuracy because accuracy alone would let the majority class drive the choice. Best: depth 2, learning rate 0.05, 160 trees, cross-validated balanced accuracy 0.9399. Depth 2 winning is itself informative — the boundary is simple, and deeper trees just memorized noise.</p>
+</section>
+<section class="qa"><h3><span class="num">22.</span> Did tuning leak the test set?</h3>
+<p>No. Selection used only the 200-row training portion; the 51 held-out rows were touched once, at the end. Final tuned XGBoost test result: 88.2% (45/51), F1 0.88, ROC-AUC 0.977, against 51.0% for the majority baseline — and we report that lower number even though the untuned Gradient Boosting scored higher, because the tuned model is the one that followed the honest protocol.</p>
+</section>
+<section class="qa"><h3><span class="num">23.</span> What were your baselines?</h3>
+<p>Two, not one: majority class at 51.4%, and a domain rule applying the institutional thresholds (CGPA 7.5 or above, coding 75 or above, zero active backlogs, and so on) at 76.9% accuracy. The rule baseline is the meaningful one — it is what a placement officer does by hand, and it has 0.526 recall, missing nearly half of ready students. Beating that is the actual result.</p>
+</section>
+<h2>E. Explainable AI</h2>
+<section class="qa"><h3><span class="num">24.</span> Your model is 78% CGPA. Isn&#x27;t that a red flag?</h3>
+<p>It is a finding, and we treat it as one. It says the prototype label is dominated by academic eligibility, which is honest about the data and also a warning: a fairness review would need to check whether CGPA is acting as a proxy for something else, and subgroup performance is unverified. The product does not rely on importance alone — the skill-gap matrix uses fixed industry thresholds so the advice is auditable.</p>
+</section>
+<section class="qa"><h3><span class="num">25.</span> Which XAI method did you use — SHAP or LIME?</h3>
+<p>Both feature importance (Gini, global) and SHAP (TreeExplainer, local, on demand through <code>POST /api/explain/shap</code>). LIME is not implemented; the brief allows either. SHAP values are labelled as raw log-odds in the UI, not probabilities, because mixing the two is a common misreading. SHAP is unavailable for models the explainer cannot wrap, and the UI says so rather than showing a blank chart.</p>
+</section>
+<section class="qa"><h3><span class="num">26.</span> Give me a local explanation for one student.</h3>
+<p>For a student just below the line, the panel shows the one-feature counterfactual: raising CGPA from 6.8 to 7.6 moves predicted readiness from about 0.42 to about 0.78, while adding a project moves it far less. That is what makes the output actionable — it tells the student which lever actually matters, not just a score.</p>
+</section>
+<h2>F. Pipeline and deployment</h2>
+<section class="qa"><h3><span class="num">27.</span> Show me the pipeline. Is it reproducible?</h3>
+<p>Five stages, all scripted: validate (<code>data_pipeline.py</code>), evaluate (<code>compare_models.py</code> into <code>reports/model-evaluation/</code>), train and persist (<code>train_model.py</code> into <code>placement_model.joblib</code>), version and register (<code>model_registry.py</code>), then optional offline tuning (<code>tune_xgboost.py</code> into <code>reports/teacher-brief-xgboost/</code>). Reproducibility is anchored on the dataset SHA-256 <code>e9fe3511...</code>, a fixed seed of 42, and pinned requirements. Nothing is promoted automatically from the research experiment.</p>
+</section>
+<section class="qa"><h3><span class="num">28.</span> Is it actually deployed, or does it only run locally?</h3>
+<p>It runs as a real service, not a notebook: a React + Vite frontend and a Flask REST API (<code>/api/predict</code>, <code>/api/model-info</code>, <code>/api/explain/shap</code>, <code>/api/cohort-analytics</code>), served in containers. <code>docker compose up --build</code> starts the development stack on ports 5173 and 5000; <code>docker-compose.production.yml</code> runs Gunicorn with 2 workers x 4 threads, non-root containers, unprivileged Nginx with SPA fallback and <code>/api/</code> reverse proxy, and readiness-gated startup. What is not done is public hosting with TLS, institutional identity and a managed database — I will say that plainly rather than overclaim.</p>
+</section>
+<section class="qa"><h3><span class="num">29.</span> What happens on a version mismatch between model file and library?</h3>
+<p>A real issue: the artifact was serialized with scikit-learn 1.9.1 and the review environment had 1.9.0, which warns on load. The mitigation is to pin the training environment in the Docker image and retrain inside the deployment image, which is why <code>requirements.txt</code> and the Dockerfile matter as much as the model file.</p>
+</section>
+<section class="qa"><h3><span class="num">30.</span> What are the limits of this deployment?</h3>
+<p>Identity and tenancy are prototype-grade: a SQLite history volume, no OIDC, no role-based authorization beyond the application&#x27;s own checks, no backups or monitoring. Input validation is enforced at the API boundary (CGPA 0-10, scores 0-100, non-negative counts) so malformed requests cannot silently produce garbage predictions. Scaling beyond a department needs a managed database, TLS, and an approved data-retention policy.</p>
+</section>
+<h2>G. Trap questions</h2>
+<section class="qa"><h3><span class="num">31.</span> I give you 5,000 verified LPU records tomorrow. What breaks?</h3>
+<p>The feature schema holds, so retraining is straightforward — but everything downstream must be re-derived: class balance may shift, the 0.9399 tuned CV score is meaningless on new data, thresholds may need re-fitting, calibration must be redone, and subgroup fairness becomes testable for the first time. It would be a new evaluation, not a rerun.</p>
+</section>
+<section class="qa"><h3><span class="num">32.</span> What would you do differently with more time?</h3>
+<p>Three things: fix the label&#x27;s provenance so accuracy means placement outcomes instead of a rule, add <code>StandardScaler</code> inside a pipeline for the scale-sensitive models, and complete the Supabase migration with real authentication so it is deployable beyond a demo.</p>
+</section>
+<section class="qa"><h3><span class="num">33.</span> What did each of you actually build?</h3>
+<p>Answer with the split on slide 18 — data and ML (dataset audit, pipeline, model comparison, tuning, calibration), backend and deployment (Flask API, authentication, Docker, Nginx, Gunicorn), frontend and XAI (React dashboards, skill-gap matrix, SHAP panel, telemetry). Each person should be able to name one artifact they own and one number they produced.</p>
+</section>
+<h2>Delivery advice</h2>
+<p class="tip">Open with the 76.9% rule baseline and the 51.4% majority baseline before saying 96%, and always say &quot;94-96% across repeated cross-validation&quot; rather than a bare 96%. Volunteering that the label is a prototype and the 96% is same-dataset makes every subsequent question easier — it is the difference between a team that trained a model and a team that understands one.</p>
+</body></html>

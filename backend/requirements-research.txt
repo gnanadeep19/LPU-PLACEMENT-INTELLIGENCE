@@ -1,0 +1,4 @@
+-r requirements.txt
+xgboost>=2.1.0
+matplotlib>=3.9.0
+seaborn>=0.13.0

@@ -1,0 +1,61 @@
+{
+  "dataset": "dataset\\college_placement_engineering.csv",
+  "target": "PlacedOrNot",
+  "original_rows": 2966,
+  "duplicate_rows_removed": 1829,
+  "rows_evaluated": 1137,
+  "features": [
+    "Age",
+    "Gender",
+    "Stream",
+    "Internships",
+    "CGPA",
+    "Hostel",
+    "HistoryOfBacklogs"
+  ],
+  "class_counts": {
+    "1": 659,
+    "0": 478
+  },
+  "cross_validation": "RepeatedStratifiedKFold: 5 folds x 3 repeats",
+  "models": {
+    "logistic_regression": {
+      "accuracy": {
+        "mean": 0.7276695777623206,
+        "std": 0.026967159625158818
+      },
+      "balanced_accuracy": {
+        "mean": 0.7279724981839285,
+        "std": 0.029969496513390474
+      },
+      "f1": {
+        "mean": 0.7556927923208068,
+        "std": 0.022703362814992883
+      },
+      "roc_auc": {
+        "mean": 0.8319698324564109,
+        "std": 0.017252386759799225
+      }
+    },
+    "random_forest": {
+      "accuracy": {
+        "mean": 0.7918360512146738,
+        "std": 0.022644316874025683
+      },
+      "balanced_accuracy": {
+        "mean": 0.8018329437403362,
+        "std": 0.022210071959485194
+      },
+      "f1": {
+        "mean": 0.8042490502846703,
+        "std": 0.022965152708999025
+      },
+      "roc_auc": {
+        "mean": 0.851869045559722,
+        "std": 0.024247500693724958
+      }
+    }
+  },
+  "live_model_compatibility": false,
+  "compatibility_note": "The benchmark lacks technical_score, aptitude_score, communication_score, coding_score, projects, and certifications."
+}

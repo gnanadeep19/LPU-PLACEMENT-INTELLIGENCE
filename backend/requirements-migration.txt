@@ -1,0 +1,2 @@
+# Install only in the environment used for the controlled data migration.
+psycopg[binary]>=3.2,<4

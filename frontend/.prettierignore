@@ -1,0 +1,8 @@
+dist/
+node_modules/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+package-lock.json
+src/style.css

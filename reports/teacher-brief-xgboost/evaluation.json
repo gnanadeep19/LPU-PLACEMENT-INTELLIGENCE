@@ -1,0 +1,111 @@
+{
+  "dataset": {
+    "path": "dataset\\students.csv",
+    "sha256": "e9fe3511c1ef3777e871e0bd97bd2b93efb002998ae3f29d4be152f6e4dc5e8f",
+    "original_rows": 253,
+    "rows": 251,
+    "duplicate_rows_removed": 2,
+    "features": [
+      "cgpa",
+      "technical_score",
+      "aptitude_score",
+      "communication_score",
+      "coding_score",
+      "projects",
+      "internships",
+      "certifications",
+      "backlogs"
+    ],
+    "target": "placement_ready",
+    "class_distribution": {
+      "0": 129,
+      "1": 122
+    },
+    "data_status": "prototype_unverified_label_and_provenance"
+  },
+  "target": "placement_ready; source meaning unverified",
+  "seed": 42,
+  "training_rows": 200,
+  "test_rows": 51,
+  "features": [
+    "cgpa",
+    "technical_score",
+    "aptitude_score",
+    "communication_score",
+    "coding_score",
+    "projects",
+    "internships",
+    "certifications",
+    "backlogs",
+    "coding_technical_mean",
+    "experience_count"
+  ],
+  "engineered_features": {
+    "coding_technical_mean": "mean of coding and technical scores",
+    "experience_count": "projects plus internships"
+  },
+  "tuning": {
+    "method": "GridSearchCV, stratified 3-fold on training split only",
+    "selection_metric": "balanced_accuracy",
+    "parameter_grid": {
+      "n_estimators": [
+        80,
+        160
+      ],
+      "max_depth": [
+        2,
+        3
+      ],
+      "learning_rate": [
+        0.05,
+        0.1
+      ]
+    },
+    "best_parameters": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 160
+    },
+    "best_cv_balanced_accuracy": 0.9399247198879551
+  },
+  "test_metrics": {
+    "xgboost": {
+      "accuracy": 0.8823529411764706,
+      "balanced_accuracy": 0.8823076923076922,
+      "f1": 0.88,
+      "roc_auc": 0.9769230769230769,
+      "confusion_matrix": [
+        [
+          23,
+          3
+        ],
+        [
+          3,
+          22
+        ]
+      ]
+    },
+    "majority_baseline": {
+      "accuracy": 0.5098039215686274,
+      "balanced_accuracy": 0.5,
+      "f1": 0.0,
+      "roc_auc": 0.5,
+      "confusion_matrix": [
+        [
+          26,
+          0
+        ],
+        [
+          25,
+          0
+        ]
+      ]
+    }
+  },
+  "limitations": [
+    "Prototype dataset has 251 distinct rows and an unverified label and provenance.",
+    "The held-out split is from the same dataset and is not external LPU validation.",
+    "The model is experimental and is not active on the website."
+  ],
+  "xgboost_version": "3.4.1"
+}

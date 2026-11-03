@@ -1,0 +1,31 @@
+# Python
+backend/.venv/
+backend/__pycache__/
+*.py[cod]
+*$py.class
+*.joblib
+!backend/placement_model.joblib
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/playwright-report/
+frontend/test-results/
+frontend/blob-report/
+
+# Environment and secrets
+.env
+.env.local
+backend/data/auth.sqlite3*
+backend/data/*.sqlite3
+backend/data/demo/
+backend/data/*.sqlite3-wal
+backend/data/*.sqlite3-shm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+~$*
+*.zip

@@ -1,0 +1,101 @@
+{
+  "dataset": "Stutern Nigerian Graduate Report 2018, third-party cleaned mirror",
+  "source": "https://www.kaggle.com/datasets/stutern/nigerian-gradaute-report-2018",
+  "mirror": "https://github.com/EJmpa/Stat-Solver/blob/main/Data_Cleaning/Nigerian_Graduates_Destination_Survey.csv",
+  "license": "CC BY-SA 4.0 (Kaggle source)",
+  "sha256": "00ea98c30b27bdc89fc9b6763e83205a680739f5ccba38882db4ec282c51f501",
+  "rows_original": 5219,
+  "identical_responses_excluded": 175,
+  "rows_after_duplicate_exclusion": 5044,
+  "training_rows": 4035,
+  "test_rows": 1009,
+  "label_counts": {
+    "ever_employed": 3382,
+    "zero_jobs_reported": 1662
+  },
+  "features": [
+    "Title of course studied",
+    "Year of graduation"
+  ],
+  "test_fraction": 0.2,
+  "random_seed": 42,
+  "target": "Self-reported at least one job since graduation; not current employment or campus placement.",
+  "limitations": [
+    "Nigerian respondents surveyed in 2018, not validated on LPU students.",
+    "Graduation year changes time available to find work; this is not a fixed-horizon outcome.",
+    "Course and graduation year do not match the nine inputs in the existing dashboard.",
+    "Stratified random split estimates same-survey performance, not later-year generalization.",
+    "Identical responses may be genuine distinct respondents; the exclusion is conservative.",
+    "Post-graduation information, including job count used to derive the target, is excluded from the predictors."
+  ],
+  "python_version": "3.13.15",
+  "scikit_learn_version": "1.9.0",
+  "results": {
+    "majority_baseline": {
+      "accuracy": 0.6709613478691774,
+      "accuracy_wilson_95_interval": [
+        0.6413689319664013,
+        0.6992569349898172
+      ],
+      "balanced_accuracy": 0.5,
+      "precision_ever_employed": 0.6709613478691774,
+      "recall_ever_employed": 1.0,
+      "f1_ever_employed": 0.8030842230130486,
+      "roc_auc": 0.5,
+      "confusion_matrix_rows_actual_no_yes_columns_predicted_no_yes": [
+        [
+          0,
+          332
+        ],
+        [
+          0,
+          677
+        ]
+      ]
+    },
+    "logistic_regression": {
+      "accuracy": 0.686818632309217,
+      "accuracy_wilson_95_interval": [
+        0.6575387791981835,
+        0.714681371069916
+      ],
+      "balanced_accuracy": 0.5609350251819687,
+      "precision_ever_employed": 0.7012263099219621,
+      "recall_ever_employed": 0.9290989660265879,
+      "f1_ever_employed": 0.7992376111817027,
+      "roc_auc": 0.6334421882507875,
+      "confusion_matrix_rows_actual_no_yes_columns_predicted_no_yes": [
+        [
+          64,
+          268
+        ],
+        [
+          48,
+          629
+        ]
+      ]
+    },
+    "random_forest": {
+      "accuracy": 0.6699702675916749,
+      "accuracy_wilson_95_interval": [
+        0.6403595647761698,
+        0.698291659473056
+      ],
+      "balanced_accuracy": 0.505401220836077,
+      "precision_ever_employed": 0.6733870967741935,
+      "recall_ever_employed": 0.9867060561299852,
+      "f1_ever_employed": 0.8004793289394847,
+      "roc_auc": 0.6115659091313557,
+      "confusion_matrix_rows_actual_no_yes_columns_predicted_no_yes": [
+        [
+          8,
+          324
+        ],
+        [
+          9,
+          668
+        ]
+      ]
+    }
+  }
+}
